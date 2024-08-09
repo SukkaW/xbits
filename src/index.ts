@@ -71,13 +71,13 @@ const UNITS_TABLE = {
 } as const;
 
 const toLocaleString = (number: number, locale?: Intl.LocalesArgument | boolean, options?: Intl.NumberFormatOptions) => {
-  if (locale === false || locale === undefined) {
-    return number.toString();
-  }
-  if (locale === true) {
+  if (locale === true || options !== undefined) {
     return number.toLocaleString(undefined, options);
   }
-  return number.toLocaleString(undefined, options);
+  if (typeof locale === 'string' || Array.isArray(locale)) {
+    return number.toLocaleString(locale, options);
+  }
+  return number.toString();
 };
 
 interface PrettyBytesPreset {
