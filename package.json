@@ -30,17 +30,24 @@
   },
   "scripts": {
     "lint": "eslint --format=sukka .",
-    "build": "bunchee -m"
+    "build": "bunchee -m",
+    "test": "nyc mocha --require @swc-node/register test/**/*.ts"
   },
   "keywords": [],
   "author": "Sukka <https://skk.moe>",
   "license": "MIT",
   "devDependencies": {
+    "@swc-node/register": "^1.10.9",
     "@swc/core": "^1.7.6",
+    "@types/chai": "4",
+    "@types/mocha": "^10.0.7",
     "bunchee": "^5.3.1",
+    "chai": "4",
     "eslint": "^9.8.0",
     "eslint-config-sukka": "^6.1.10",
     "eslint-formatter-sukka": "^6.1.10",
+    "mocha": "^10.7.3",
+    "nyc": "^17.0.0",
     "typescript": "^5.5.4"
   },
   "packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf"

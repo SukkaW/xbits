@@ -251,12 +251,14 @@ export function createPrettyBytes({
       number = -number;
     }
 
-    let localeOptions: Intl.NumberFormatOptions | undefined;
-    if (minimumFractionDigits !== undefined || maximumFractionDigits !== undefined) {
-      localeOptions = {
-        ...(minimumFractionDigits !== undefined && { minimumFractionDigits }),
-        ...(maximumFractionDigits !== undefined && { maximumFractionDigits })
-      };
+    let localeOptions;
+
+    if (minimumFractionDigits !== undefined) {
+      localeOptions = { minimumFractionDigits };
+    }
+
+    if (maximumFractionDigits !== undefined) {
+      localeOptions = { maximumFractionDigits, ...localeOptions };
     }
 
     if (number < 1) {
@@ -267,17 +269,37 @@ export function createPrettyBytes({
     const exponent = Math.min(Math.floor(binary ? Math.log(number) / Math.log(1024) : Math.log10(number) / 3), UNITS.length - 1);
     number /= (binary ? 1024 : 1000) ** exponent;
 
+    let numberOrString: number | string = number;
     if (!localeOptions) {
-      number = Number(number.toPrecision(3));
+      numberOrString = number.toPrecision(3);
     }
 
-    const numberString = toLocaleString(number, locale, localeOptions);
+    numberOrString = toLocaleString(Number(numberOrString), locale, localeOptions);
 
     const unit = UNITS[exponent];
 
-    return prefix + numberString + separator + unit;
+    return prefix + numberOrString + separator + unit;
   };
 }
 
+export const prettyBits = (number: number, options: PrettyBytesOptions & PrettyBytesPreset = {}) => {
+  const {
+    bits, binary, speed, largeK,
+    space, signed, minimumFractionDigits, maximumFractionDigits, locale
+  } = options;
+
+  return createPrettyBytes({
+    bits,
+    binary,
+    speed,
+    largeK
+  })(number, {
+    signed,
+    space,
+    minimumFractionDigits,
+    maximumFractionDigits,
+    locale
+  });
+};
 export const prettyBandwidth = createPrettyBytes(prettyBytesPresets.bandwidth);
 export const prettyTraffic = createPrettyBytes(prettyBytesPresets.traffic);
