@@ -1,6 +1,6 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { prettyBits } from '../src';
+import { prettyBandwidth, prettyBits, prettyTraffic } from '../src';
 
 describe('pretty-bits', () => {
   it('converts bytes to human readable strings', () => {
@@ -133,5 +133,10 @@ describe('pretty-bits', () => {
     expect(prettyBits(4001, { largeK: false })).to.equal('4 kB');
     expect(prettyBits(18717, { largeK: false, binary: true })).to.equal('18.3 KiB');
     expect(prettyBits(18717, { largeK: false })).to.equal('18.7 kB');
+  });
+
+  it('prettyBandwidth & prettyTraffic', () => {
+    expect(prettyBandwidth(1e6)).to.equal('1 Mbps');
+    expect(prettyTraffic(1_024_000)).to.equal('1000 KiB');
   });
 });
