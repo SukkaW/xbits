@@ -1,0 +1,47 @@
+{
+  "name": "pretty-bits",
+  "version": "0.0.0",
+  "description": "Convert bits and bytes to a human readable string",
+  "homepage": "https://github.com/SukkaW/pretty-bits#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/SukkaW/pretty-bits.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SukkaW/pretty-bits/issues"
+  },
+  "main": "./dist/cjs/index.js",
+  "module": "./dist/es/index.mjs",
+  "types": "./dist/cjs/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "exports": {
+    ".": {
+      "import": {
+        "types": "./dist/es/index.d.mts",
+        "default": "./dist/es/index.mjs"
+      },
+      "require": {
+        "types": "./dist/cjs/index.d.ts",
+        "default": "./dist/cjs/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "lint": "eslint --format=sukka .",
+    "build": "bunchee -m"
+  },
+  "keywords": [],
+  "author": "Sukka <https://skk.moe>",
+  "license": "MIT",
+  "devDependencies": {
+    "@swc/core": "^1.7.6",
+    "bunchee": "^5.3.1",
+    "eslint": "^9.8.0",
+    "eslint-config-sukka": "^6.1.10",
+    "eslint-formatter-sukka": "^6.1.10",
+    "typescript": "^5.5.4"
+  },
+  "packageManager": "pnpm@9.7.0+sha512.dc09430156b427f5ecfc79888899e1c39d2d690f004be70e05230b72cb173d96839587545d09429b55ac3c429c801b4dc3c0e002f653830a420fa2dd4e3cf9cf"
+}
