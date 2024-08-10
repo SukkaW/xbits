@@ -1,6 +1,6 @@
 {
   "name": "xbits",
-  "version": "0.1.2-beta.1",
+  "version": "0.1.2-beta.2",
   "description": "Convert bits and bytes to a human readable string",
   "homepage": "https://github.com/SukkaW/xbits#readme",
   "repository": {
