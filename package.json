@@ -1,6 +1,6 @@
 {
   "name": "pretty-bits",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "Convert bits and bytes to a human readable string",
   "homepage": "https://github.com/SukkaW/pretty-bits#readme",
   "repository": {
@@ -31,7 +31,9 @@
   "scripts": {
     "lint": "eslint --format=sukka .",
     "build": "bunchee -m",
-    "test": "nyc mocha --require @swc-node/register test/**/*.ts"
+    "test": "nyc mocha --require @swc-node/register test/**/*.ts",
+    "prerelease": "pnpm run lint && pnpm run build",
+    "release": "bumpp -r --all --commit \"release: %s\" --tag \"%s\""
   },
   "keywords": [],
   "author": "Sukka <https://skk.moe>",
@@ -41,6 +43,7 @@
     "@swc/core": "^1.7.6",
     "@types/chai": "4",
     "@types/mocha": "^10.0.7",
+    "bumpp": "^9.4.2",
     "bunchee": "^5.3.1",
     "chai": "4",
     "eslint": "^9.8.0",
