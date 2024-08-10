@@ -1,6 +1,11 @@
 import { describe, it } from 'mocha';
 import { expect } from 'chai';
-import { prettyBandwidth, prettyBits, prettyTraffic } from '../src';
+import {
+  prettyBandwidth, prettyBits, prettyTraffic,
+  bits, bytes, ibits,
+  ibytes,
+  bps
+} from '../src';
 
 describe('xbits', () => {
   it('converts bytes to human readable strings', () => {
@@ -138,5 +143,101 @@ describe('xbits', () => {
   it('prettyBandwidth & prettyTraffic', () => {
     expect(prettyBandwidth(1e6)).to.equal('1 Mbps');
     expect(prettyTraffic(1_024_000)).to.equal('1000 KiB');
+  });
+
+  it('bits', () => {
+    expect(bits(1)).to.equal('1 b');
+    expect(bits(0)).to.equal('0 b');
+    expect(bits(3)).to.equal('3 b');
+    expect(bits(11)).to.equal('11 b');
+    expect(bits(999)).to.equal('999 b');
+    expect(bits(1000)).to.equal('1 Kbit');
+    expect(bits(1001)).to.equal('1 Kbit');
+    expect(bits(1020)).to.equal('1.02 Kbit');
+    expect(bits(1230)).to.equal('1.23 Kbit');
+    expect(bits(1234)).to.equal('1.23 Kbit');
+    expect(bits(1999)).to.equal('2 Kbit');
+    expect(bits(11020)).to.equal('11 Kbit');
+    expect(bits(11030)).to.equal('11 Kbit');
+    expect(bits(11234)).to.equal('11.2 Kbit');
+    expect(bits(21999)).to.equal('22 Kbit');
+  });
+
+  it('ibits', () => {
+    expect(ibits(1)).to.equal('1 b');
+    expect(ibits(0)).to.equal('0 b');
+    expect(ibits(3)).to.equal('3 b');
+    expect(ibits(11)).to.equal('11 b');
+    expect(ibits(999)).to.equal('999 b');
+    expect(ibits(1000)).to.equal('1000 b');
+    expect(ibits(1001)).to.equal('1000 b');
+    expect(ibits(1020)).to.equal('1020 b');
+    expect(ibits(1230)).to.equal('1.2 Kibit');
+    expect(ibits(1234)).to.equal('1.21 Kibit');
+    expect(ibits(1999)).to.equal('1.95 Kibit');
+    expect(ibits(11020)).to.equal('10.8 Kibit');
+    expect(ibits(11030)).to.equal('10.8 Kibit');
+    expect(ibits(11234)).to.equal('11 Kibit');
+    expect(ibits(21999)).to.equal('21.5 Kibit');
+  });
+
+  it('bytes', () => {
+    expect(bytes(1)).to.equal('1 B');
+    expect(bytes(0)).to.equal('0 B');
+    expect(bytes(3)).to.equal('3 B');
+    expect(bytes(11)).to.equal('11 B');
+    expect(bytes(123)).to.equal('123 B');
+    expect(bytes(999)).to.equal('999 B');
+    expect(bytes(1000)).to.equal('1 KB');
+    expect(bytes(1001)).to.equal('1 KB');
+    expect(bytes(1020)).to.equal('1.02 KB');
+    expect(bytes(1030)).to.equal('1.03 KB');
+    expect(bytes(1200)).to.equal('1.2 KB');
+    expect(bytes(1230)).to.equal('1.23 KB');
+    expect(bytes(1999)).to.equal('2 KB');
+    expect(bytes(11020)).to.equal('11 KB');
+    expect(bytes(11030)).to.equal('11 KB');
+    expect(bytes(11234)).to.equal('11.2 KB');
+    expect(bytes(21999)).to.equal('22 KB');
+  });
+
+  it('ibytes', () => {
+    expect(ibytes(1)).to.equal('1 B');
+    expect(ibytes(0)).to.equal('0 B');
+    expect(ibytes(3)).to.equal('3 B');
+    expect(ibytes(11)).to.equal('11 B');
+    expect(ibytes(123)).to.equal('123 B');
+    expect(ibytes(999)).to.equal('999 B');
+    expect(ibytes(1000)).to.equal('1000 B');
+    expect(ibytes(1001)).to.equal('1000 B');
+    expect(ibytes(1020)).to.equal('1020 B');
+    expect(ibytes(1030)).to.equal('1.01 KiB');
+    expect(ibytes(1200)).to.equal('1.17 KiB');
+    expect(ibytes(1230)).to.equal('1.2 KiB');
+    expect(ibytes(1999)).to.equal('1.95 KiB');
+    expect(ibytes(11020)).to.equal('10.8 KiB');
+    expect(ibytes(11030)).to.equal('10.8 KiB');
+    expect(ibytes(11234)).to.equal('11 KiB');
+    expect(ibytes(21999)).to.equal('21.5 KiB');
+  });
+
+  it('bps', () => {
+    expect(bps(1)).to.equal('1 bps');
+    expect(bps(0)).to.equal('0 bps');
+    expect(bps(3)).to.equal('3 bps');
+    expect(bps(11)).to.equal('11 bps');
+    expect(bps(123)).to.equal('123 bps');
+    expect(bps(999)).to.equal('999 bps');
+    expect(bps(1000)).to.equal('1 Kbps');
+    expect(bps(1001)).to.equal('1 Kbps');
+    expect(bps(1020)).to.equal('1.02 Kbps');
+    expect(bps(1030)).to.equal('1.03 Kbps');
+    expect(bps(1200)).to.equal('1.2 Kbps');
+    expect(bps(1230)).to.equal('1.23 Kbps');
+    expect(bps(1999)).to.equal('2 Kbps');
+    expect(bps(11020)).to.equal('11 Kbps');
+    expect(bps(11030)).to.equal('11 Kbps');
+    expect(bps(11234)).to.equal('11.2 Kbps');
+    expect(bps(21999)).to.equal('22 Kbps');
   });
 });

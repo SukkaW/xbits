@@ -26,11 +26,13 @@ const UNITS_TABLE = {
   y: {
     /** binary: true */
     y: {
+      /** largeK */
       y: makeLargeKTuple(BIBIT_SPEED_UNITS),
       n: makeLargeKTuple(BIBIT_UNITS)
     },
     /** binary: false */
     n: {
+      /** largeK */
       y: makeLargeKTuple(BIT_SPEED_UNITS),
       n: makeLargeKTuple(BIT_UNITS)
     }
@@ -39,11 +41,13 @@ const UNITS_TABLE = {
   n: {
     /** binary: true */
     y: {
+      /** largeK */
       y: makeLargeKTuple(BIBYTE_SPEED_UNITS),
       n: makeLargeKTuple(BIBYTE_UNITS)
     },
     /** binary: false */
     n: {
+      /** largeK */
       y: makeLargeKTuple(BYTE_SPEED_UNITS),
       n: makeLargeKTuple(BYTE_UNITS)
     }
@@ -284,3 +288,9 @@ export const prettyBits = (number: number, options: PrettyBitsOptions & PrettyBi
 };
 export const prettyBandwidth = createPrettyBits(prettyBitsPresets.bandwidth);
 export const prettyTraffic = createPrettyBits(prettyBitsPresets.traffic);
+
+export const bits = createPrettyBits({ bits: true, binary: false, speed: false, largeK: true });
+export const ibits = createPrettyBits({ bits: true, binary: true, speed: false, largeK: true });
+export const bytes = createPrettyBits(prettyBitsPresets.darwin_storage);
+export const ibytes = prettyTraffic;
+export const bps = prettyBandwidth;
