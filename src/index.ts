@@ -69,7 +69,7 @@ interface PrettyBitsPreset {
 
     @example
     ```
-    import prettyBits from 'pretty-bits';
+    import { prettyBits } from 'xbits';
 
     prettyBits(1337, {bits: true});
     //=> '1.34 kbit'
@@ -84,7 +84,7 @@ interface PrettyBitsPreset {
 
     @example
     ```
-    import prettyBits from 'pretty-bits';
+    import { prettyBits } from 'xbits';
 
     prettyBits(1000, {binary: true});
     //=> '1000 bit'
@@ -137,7 +137,7 @@ interface PrettyBitsOptions {
 
     @example
     ```
-    import prettyBits from 'pretty-bits';
+    import { prettyBits } from 'xbits';
 
     // Show the number with at least 3 fractional digits
     prettyBits(1900, {minimumFractionDigits: 3});
@@ -158,7 +158,7 @@ interface PrettyBitsOptions {
 
     @example
     ```
-    import prettyBits from 'pretty-bits';
+    import { prettyBits } from 'xbits';
 
     // Show the number with at most 1 fractional digit
     prettyBits(1920, {maximumFractionDigits: 1});
@@ -177,7 +177,7 @@ interface PrettyBitsOptions {
 
     @example
     ```
-    import prettyBits from 'pretty-bits';
+    import { prettyBits } from 'xbits';
 
     prettyBits(1920, {space: false});
     //=> '1.9kB'

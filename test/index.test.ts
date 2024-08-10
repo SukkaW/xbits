@@ -2,7 +2,7 @@ import { describe, it } from 'mocha';
 import { expect } from 'chai';
 import { prettyBandwidth, prettyBits, prettyTraffic } from '../src';
 
-describe('pretty-bits', () => {
+describe('xbits', () => {
   it('converts bytes to human readable strings', () => {
     expect(prettyBits(0)).to.equal('0 B');
     expect(prettyBits(0.4)).to.equal('0.4 B');
