@@ -16,55 +16,36 @@ const makeLargeK = (units: string[]) => {
   return results;
 };
 
+const makeLargeKTuple = (units: string[]): { y: string[], n: string[] } => ({
+  y: makeLargeK(units),
+  n: units
+});
+
 const UNITS_TABLE = {
   /** bits: true */
-  true: {
+  y: {
     /** binary: true */
-    true: {
-      true: {
-        true: makeLargeK(BIBIT_SPEED_UNITS),
-        false: BIBIT_SPEED_UNITS
-      },
-      false: {
-        true: makeLargeK(BIBIT_UNITS),
-        false: BIBIT_UNITS
-      }
+    y: {
+      y: makeLargeKTuple(BIBIT_SPEED_UNITS),
+      n: makeLargeKTuple(BIBIT_UNITS)
     },
     /** binary: false */
-    false: {
-      true: {
-        true: makeLargeK(BIT_SPEED_UNITS),
-        false: BIT_SPEED_UNITS
-      },
-      false: {
-        true: makeLargeK(BIT_UNITS),
-        false: BIT_UNITS
-      }
+    n: {
+      y: makeLargeKTuple(BIT_SPEED_UNITS),
+      n: makeLargeKTuple(BIT_UNITS)
     }
   },
   /** bits: false */
-  false: {
+  n: {
     /** binary: true */
-    true: {
-      true: {
-        true: BIBYTE_SPEED_UNITS, // ignore large K here
-        false: BIBYTE_SPEED_UNITS
-      },
-      false: {
-        true: BIBYTE_UNITS, // ignore large K here
-        false: BIBYTE_UNITS
-      }
+    y: {
+      y: makeLargeKTuple(BIBYTE_SPEED_UNITS),
+      n: makeLargeKTuple(BIBYTE_UNITS)
     },
     /** binary: false */
-    false: {
-      true: {
-        true: makeLargeK(BYTE_SPEED_UNITS),
-        false: BYTE_SPEED_UNITS
-      },
-      false: {
-        true: makeLargeK(BYTE_UNITS),
-        false: BYTE_UNITS
-      }
+    n: {
+      y: makeLargeKTuple(BYTE_SPEED_UNITS),
+      n: makeLargeKTuple(BYTE_UNITS)
     }
   }
 
@@ -80,7 +61,7 @@ const toLocaleString = (number: number, locale?: Intl.LocalesArgument | boolean,
   return number.toString();
 };
 
-interface PrettyBytesPreset {
+interface PrettyBitsPreset {
   /**
     Format the number as [bits](https://en.wikipedia.org/wiki/Bit) instead of [bytes](https://en.wikipedia.org/wiki/Byte). This can be useful when, for example, referring to [bit rate](https://en.wikipedia.org/wiki/Bit_rate).
 
@@ -88,9 +69,9 @@ interface PrettyBytesPreset {
 
     @example
     ```
-    import prettyBytes from 'pretty-bytes';
+    import prettyBits from 'pretty-bits';
 
-    prettyBytes(1337, {bits: true});
+    prettyBits(1337, {bits: true});
     //=> '1.34 kbit'
     ```
     */
@@ -103,12 +84,12 @@ interface PrettyBytesPreset {
 
     @example
     ```
-    import prettyBytes from 'pretty-bytes';
+    import prettyBits from 'pretty-bits';
 
-    prettyBytes(1000, {binary: true});
+    prettyBits(1000, {binary: true});
     //=> '1000 bit'
 
-    prettyBytes(1024, {binary: true});
+    prettyBits(1024, {binary: true});
     //=> '1 kiB'
     ```
     */
@@ -129,7 +110,7 @@ interface PrettyBytesPreset {
   readonly largeK?: boolean
 }
 
-interface PrettyBytesOptions {
+interface PrettyBitsOptions {
   /**
     Include plus sign for positive numbers. If the difference is exactly zero a space character will be prepended instead for better alignment.
 
@@ -156,13 +137,13 @@ interface PrettyBytesOptions {
 
     @example
     ```
-    import prettyBytes from 'pretty-bytes';
+    import prettyBits from 'pretty-bits';
 
     // Show the number with at least 3 fractional digits
-    prettyBytes(1900, {minimumFractionDigits: 3});
+    prettyBits(1900, {minimumFractionDigits: 3});
     //=> '1.900 kB'
 
-    prettyBytes(1900);
+    prettyBits(1900);
     //=> '1.9 kB'
     ```
     */
@@ -177,13 +158,13 @@ interface PrettyBytesOptions {
 
     @example
     ```
-    import prettyBytes from 'pretty-bytes';
+    import prettyBits from 'pretty-bits';
 
     // Show the number with at most 1 fractional digit
-    prettyBytes(1920, {maximumFractionDigits: 1});
+    prettyBits(1920, {maximumFractionDigits: 1});
     //=> '1.9 kB'
 
-    prettyBytes(1920);
+    prettyBits(1920);
     //=> '1.92 kB'
     ```
     */
@@ -196,35 +177,35 @@ interface PrettyBytesOptions {
 
     @example
     ```
-    import prettyBytes from 'pretty-bytes';
+    import prettyBits from 'pretty-bits';
 
-    prettyBytes(1920, {space: false});
+    prettyBits(1920, {space: false});
     //=> '1.9kB'
 
-    prettyBytes(1920);
+    prettyBits(1920);
     //=> '1.92 kB'
     ```
     */
   readonly space?: boolean
 };
 
-export const prettyBytesPresets = {
-  bandwidth: { bits: true, binary: false, speed: true, largeK: true } satisfies PrettyBytesPreset,
-  traffic: { bits: false, binary: true, speed: false, largeK: true } satisfies PrettyBytesPreset,
-  darwin_storage: { bits: false, binary: false, speed: false, largeK: true } satisfies PrettyBytesPreset
+export const prettyBitsPresets = {
+  bandwidth: { bits: true, binary: false, speed: true, largeK: true } satisfies PrettyBitsPreset,
+  traffic: { bits: false, binary: true, speed: false, largeK: true } satisfies PrettyBitsPreset,
+  darwin_storage: { bits: false, binary: false, speed: false, largeK: true } satisfies PrettyBitsPreset
 } as const;
 
-const bool = (value: boolean) => (value ? 'true' : 'false');
+const bool = (value: boolean) => (value ? 'y' : 'n');
 
-export function createPrettyBytes({
+export function createPrettyBits({
   bits = false,
   binary = false,
   speed = false,
   largeK = true
-}: PrettyBytesPreset) {
+}: PrettyBitsPreset = {}) {
   const UNITS = UNITS_TABLE[bool(bits)][bool(binary)][bool(speed)][bool(largeK)];
 
-  return function prettyBytes(
+  return function prettyBits(
     number: number,
     {
       space = true,
@@ -232,7 +213,7 @@ export function createPrettyBytes({
       minimumFractionDigits,
       maximumFractionDigits,
       locale
-    }: PrettyBytesOptions = {}
+    }: PrettyBitsOptions = {}
   ) {
     if (!Number.isFinite(number)) {
       throw new TypeError(`Expected a finite number, got ${typeof number}: ${number}`);
@@ -282,13 +263,13 @@ export function createPrettyBytes({
   };
 }
 
-export const prettyBits = (number: number, options: PrettyBytesOptions & PrettyBytesPreset = {}) => {
+export const prettyBits = (number: number, options: PrettyBitsOptions & PrettyBitsPreset = {}) => {
   const {
     bits, binary, speed, largeK,
     space, signed, minimumFractionDigits, maximumFractionDigits, locale
   } = options;
 
-  return createPrettyBytes({
+  return createPrettyBits({
     bits,
     binary,
     speed,
@@ -301,5 +282,5 @@ export const prettyBits = (number: number, options: PrettyBytesOptions & PrettyB
     locale
   });
 };
-export const prettyBandwidth = createPrettyBytes(prettyBytesPresets.bandwidth);
-export const prettyTraffic = createPrettyBytes(prettyBytesPresets.traffic);
+export const prettyBandwidth = createPrettyBits(prettyBitsPresets.bandwidth);
+export const prettyTraffic = createPrettyBits(prettyBitsPresets.traffic);
