@@ -1,6 +1,6 @@
 {
   "name": "pretty-bits",
-  "version": "0.1.1",
+  "version": "0.1.2-beta.1",
   "description": "Convert bits and bytes to a human readable string",
   "homepage": "https://github.com/SukkaW/pretty-bits#readme",
   "repository": {
