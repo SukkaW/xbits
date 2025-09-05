@@ -10,16 +10,18 @@ const BIT_SPEED_UNITS = ['bps', 'kbps', 'Mbps', 'Gbps', 'Tbps', 'Pbps', 'Ebps', 
 const BYTE_UNITS = ['B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB'];
 const BYTE_SPEED_UNITS = ['B/s', 'kB/s', 'MB/s', 'GB/s', 'TB/s', 'PB/s', 'EB/s', 'ZB/s', 'YB/s'];
 
-const makeLargeK = (units: string[]) => {
+function makeLargeK(units: string[]) {
   const results = units.slice();
   results[1] = 'K' + results[1].slice(1);
   return results;
-};
+}
 
-const makeLargeKTuple = (units: string[]): { y: string[], n: string[] } => ({
-  y: makeLargeK(units),
-  n: units
-});
+function makeLargeKTuple(units: string[]): { y: string[], n: string[] } {
+  return {
+    y: makeLargeK(units),
+    n: units
+  };
+}
 
 const UNITS_TABLE = {
   /** bits: true */
@@ -55,7 +57,7 @@ const UNITS_TABLE = {
 
 } as const;
 
-const toLocaleString = (number: number, locale?: Intl.LocalesArgument | boolean, options?: Intl.NumberFormatOptions) => {
+function toLocaleString(number: number, locale?: Intl.LocalesArgument | boolean, options?: Intl.NumberFormatOptions) {
   if (locale === true || options !== undefined) {
     return number.toLocaleString(undefined, options);
   }
@@ -63,7 +65,7 @@ const toLocaleString = (number: number, locale?: Intl.LocalesArgument | boolean,
     return number.toLocaleString(locale, options);
   }
   return number.toString();
-};
+}
 
 interface PrettyBitsPreset {
   /**
@@ -267,7 +269,7 @@ export function createPrettyBits({
   };
 }
 
-export const prettyBits = (number: number, options: PrettyBitsOptions & PrettyBitsPreset = {}) => {
+export function prettyBits(number: number, options: PrettyBitsOptions & PrettyBitsPreset = {}) {
   const {
     bits, binary, speed, largeK,
     space, signed, minimumFractionDigits, maximumFractionDigits, locale
@@ -285,7 +287,7 @@ export const prettyBits = (number: number, options: PrettyBitsOptions & PrettyBi
     maximumFractionDigits,
     locale
   });
-};
+}
 export const prettyBandwidth = createPrettyBits(prettyBitsPresets.bandwidth);
 export const prettyTraffic = createPrettyBits(prettyBitsPresets.traffic);
 
