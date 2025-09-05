@@ -32,7 +32,7 @@
     "lint": "eslint --format=sukka .",
     "build": "bunchee -m",
     "test": "nyc mocha --require @swc-node/register test/**/*.ts",
-    "prerelease": "pnpm run lint && pnpm run build",
+    "prerelease": "pnpm run lint && pnpm run build && pnpm run test",
     "release": "bumpp -r --all --commit \"release: %s\" --tag \"%s\""
   },
   "keywords": [],
