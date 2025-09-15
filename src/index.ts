@@ -238,14 +238,16 @@ export function createPrettyBits({
       number = -number;
     }
 
-    let localeOptions;
+    let localeOptions: Intl.NumberFormatOptions | undefined;
 
     if (minimumFractionDigits !== undefined) {
-      localeOptions = { minimumFractionDigits };
+      localeOptions ??= {};
+      localeOptions.minimumFractionDigits = minimumFractionDigits;
     }
 
     if (maximumFractionDigits !== undefined) {
-      localeOptions = { maximumFractionDigits, ...localeOptions };
+      localeOptions ??= {};
+      localeOptions.maximumFractionDigits = maximumFractionDigits;
     }
 
     if (number < 1) {
