@@ -47,11 +47,11 @@
     "bunchee": "^6.6.0",
     "chai": "4",
     "eslint": "^9.35.0",
-    "eslint-config-sukka": "^6.23.1",
-    "eslint-formatter-sukka": "^6.23.1",
+    "eslint-config-sukka": "^7.1.0",
+    "eslint-formatter-sukka": "^7.1.0",
     "mocha": "^11.7.2",
     "nyc": "^17.1.0",
     "typescript": "^5.9.2"
   },
-  "packageManager": "pnpm@10.15.1"
+  "packageManager": "pnpm@10.16.1"
 }
