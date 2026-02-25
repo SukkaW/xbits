@@ -44,10 +44,10 @@
     "@types/mocha": "^10.0.10",
     "bumpp": "^10.2.3",
     "bunchee": "^6.6.0",
+    "earl": "^2.0.0",
     "eslint": "^9.36.0",
     "eslint-config-sukka": "^7.1.1",
     "eslint-formatter-sukka": "^7.1.1",
-    "expect": "^30.1.2",
     "mocha": "^11.7.2",
     "nyc": "^17.1.0",
     "typescript": "^5.9.2"
