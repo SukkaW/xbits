@@ -123,6 +123,18 @@ describe('xbits', () => {
     expect(prettyBits(65536, { minimumFractionDigits: 1, maximumFractionDigits: 3, binary: true })).toEqual('64.0 KiB');
   });
 
+  it('rounds up to the next unit', () => {
+    expect(prettyBits(999.5)).toEqual('1 KB');
+    expect(bytes(999500)).toEqual('1 MB');
+    expect(bytes(999999)).toEqual('1 MB');
+    expect(bytes(999_999_999)).toEqual('1 GB');
+    expect(bps(999500)).toEqual('1 Mbps');
+    expect(bytes(999600, { maximumFractionDigits: 0 })).toEqual('1 MB');
+    expect(bytes(999960, { minimumFractionDigits: 1, maximumFractionDigits: 1 })).toEqual('1.0 MB');
+    expect(ibytes(1023.6 * 1024, { maximumFractionDigits: 0 })).toEqual('1 MiB');
+    expect(bytes(999.5e24)).toEqual('1000 YB');
+  });
+
   it('space option', () => {
     expect(prettyBits(0)).toEqual('0 B');
     expect(prettyBits(0, { space: false })).toEqual('0B');

@@ -255,19 +255,28 @@ export function createPrettyBits({
       return prefix + numberString + separator + UNITS[0];
     }
 
-    const exponent = Math.min(Math.floor(binary ? Math.log(number) / Math.log(1024) : Math.log10(number) / 3), UNITS.length - 1);
-    number /= (binary ? 1024 : 1000) ** exponent;
+    const base = binary ? 1024 : 1000;
+    let exponent = Math.min(Math.floor(binary ? Math.log(number) / Math.log(1024) : Math.log10(number) / 3), UNITS.length - 1);
+    number /= base ** exponent;
 
-    let numberOrString: number | string = number;
     if (!localeOptions) {
-      numberOrString = number.toPrecision(3);
+      number = Number(number.toPrecision(3));
     }
 
-    numberOrString = toLocaleString(Number(numberOrString), locale, localeOptions);
+    // Rounding can carry the value up to the next unit (e.g. 999.5 KB -> 1000 KB). `toPrecision` has already rounded, while `toLocaleString` will round half up at `maximumFractionDigits`, which defaults to the larger of 3 and `minimumFractionDigits`.
+    const carryFrom = localeOptions
+      ? base - 0.5 / (10 ** (maximumFractionDigits ?? Math.max(minimumFractionDigits ?? 0, 3)))
+      : base;
+    if (number >= carryFrom && exponent < UNITS.length - 1) {
+      number /= base;
+      exponent++;
+    }
+
+    const numberString = toLocaleString(number, locale, localeOptions);
 
     const unit = UNITS[exponent];
 
-    return prefix + numberOrString + separator + unit;
+    return prefix + numberString + separator + unit;
   };
 }
 
